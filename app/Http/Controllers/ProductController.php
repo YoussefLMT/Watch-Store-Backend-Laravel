@@ -38,9 +38,32 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $request->validate($request->all());
+
+        $product = new Product;
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->category = $request->category;
+        $product->description = $request->description;
+
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $image_name = time(). '.' .$extension;
+            $image->move('uploads/images', $image_name);
+            $product->image = 'uploads/images/' . $image_name;
+        }
+
+        $product->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => "Product added successfully",
+        ]);
     }
 
     /**
