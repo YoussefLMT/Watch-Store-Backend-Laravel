@@ -110,9 +110,46 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $request->validate($request->all());
+
+        $product = Product::find($id);
+
+        if($product){
+
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->quantity = $request->quantity;
+            $product->description = $request->description;
+
+            // if($request->hasFile('image'))
+            // {
+            //     $path = $product->image;
+            //     if(File::exists($path)){
+            //         File::delete($path);
+            //     }
+            //     $image = $request->file('image');
+            //     $extension = $image->getClientOriginalExtension();
+            //     $image_name = time(). '.' .$extension;
+            //     $image->move('uploads/images', $image_name);
+            //     $product->image = 'uploads/images/' . $image_name;
+            // }
+
+            $product->update();
+    
+            return response()->json([
+                'status' => 200,
+                'message' => "Updated successully",
+            ]);
+
+        }else{
+
+            return response()->json([
+                'status' => 404,
+                'message' => 'Product not found!',
+            ]);
+        }
     }
 
     /**
