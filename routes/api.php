@@ -30,9 +30,12 @@ Route::get('specific-products', [ProductController::class, 'getSpecificProducts'
 Route::get('products-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
 
+
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('logout', [AuthController::class, 'logOut']);
+
+    Route::get('get-user', [AuthController::class, 'getUserData']);
 
 });
 
