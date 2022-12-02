@@ -97,4 +97,17 @@ class AuthController extends Controller
             'message' => 'Logged out successfully',
         ]);
     }
+
+
+
+    public function getUserData(){
+        $id = auth('sanctum')->user()->id;
+
+        $userData = User::find($id);
+
+        return response()->json([
+            'status' => 200,
+            'userData' => $userData,
+        ]);
+    }
 }
