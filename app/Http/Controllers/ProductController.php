@@ -38,7 +38,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name'=> 'required',
@@ -126,9 +126,25 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $request->validate($request->all());
+        $validator = Validator::make($request->all(), [
+            'name'=> 'required',
+            'price'=> 'required',
+            'quantity' => 'required',
+            'description' => 'required',
+            // 'image' => 'required|image|mimes:jpeg,png,jpg',
+        ]);
+
+
+        if($validator->fails()){
+
+            return response()->json([
+                'status' => 422,
+                'validation_err' => $validator->messages(),
+            ]);
+
+        }else{
 
         $product = Product::find($id);
 
@@ -166,6 +182,7 @@ class ProductController extends Controller
                 'message' => 'Product not found!',
             ]);
         }
+      }
     }
 
     /**
