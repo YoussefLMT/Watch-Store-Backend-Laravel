@@ -40,7 +40,22 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $request->validate($request->all());
+        $validator = Validator::make($request->all(), [
+            'name'=> 'required',
+            'price'=> 'required',
+            'quantity' => 'required',
+            'category' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
+        ]);
+
+        if($validator->fails()){
+
+            return response()->json([
+                'validation_err' => $validator->messages(),
+            ]);
+
+        }else{
 
         $product = new Product;
         $product->name = $request->name;
@@ -64,6 +79,7 @@ class ProductController extends Controller
             'status' => 200,
             'message' => "Product added successfully",
         ]);
+      }
     }
 
     /**
