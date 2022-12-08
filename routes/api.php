@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,11 @@ Route::delete('delete-product/{id}', [ProductController::class, 'destroy']);
 Route::get('specific-products', [ProductController::class, 'getSpecificProducts']);
 Route::get('products-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
+
+Route::post('add-to-cart/{product_id}', [CartController::class, 'addToCart']);
+Route::get('cart-count', [CartController::class, 'getCartCount']);
+Route::get('get-cart-products', [CartController::class, 'getCartProducts']);
+Route::delete('remove-product/{id}', [CartController::class, 'removeProductFromCart']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
