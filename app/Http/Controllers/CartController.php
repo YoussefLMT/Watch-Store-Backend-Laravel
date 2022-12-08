@@ -62,4 +62,27 @@ class CartController extends Controller
             'cart_products' => $cart_products
         ]);
     }
+
+
+    function removeProductFromCart($id)
+    {
+        $product = Cart::find($id);
+
+        if($product){
+
+            $product->delete();
+    
+            return response()->json([
+                'status' => 200,
+                'message' => 'Deleted successfully',
+            ]);
+
+        }else{
+
+            return response()->json([
+                'status' => 404,
+                'message' => 'Product not found!',
+            ]);
+        }
+    }
 }
