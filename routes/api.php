@@ -31,10 +31,7 @@ Route::get('specific-products', [ProductController::class, 'getSpecificProducts'
 Route::get('products-category/{category}', [ProductController::class, 'getProductsByCategory']);
 
 
-Route::post('add-to-cart/{product_id}', [CartController::class, 'addToCart']);
-Route::get('cart-count', [CartController::class, 'getCartCount']);
-Route::get('get-cart-products', [CartController::class, 'getCartProducts']);
-Route::delete('remove-product/{id}', [CartController::class, 'removeProductFromCart']);
+
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -42,6 +39,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logOut']);
 
     Route::get('get-user', [AuthController::class, 'getUserData']);
+
+    Route::post('add-to-cart/{product_id}', [CartController::class, 'addToCart']);
+    Route::get('cart-count', [CartController::class, 'getCartCount']);
+    Route::get('get-cart-products', [CartController::class, 'getCartProducts']);
+    Route::delete('remove-product/{id}', [CartController::class, 'removeProductFromCart']);
 
 });
 
