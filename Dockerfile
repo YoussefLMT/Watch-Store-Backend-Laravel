@@ -18,3 +18,5 @@ RUN composer install
 COPY docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 8000
+
+CMD php artisan serve --host=0.0.0.0
