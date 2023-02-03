@@ -2,7 +2,7 @@ FROM php:7.4-apache
 
 WORKDIR /watch_store_backend
 
-COPY . .
+COPY . /watch_store_backend
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
